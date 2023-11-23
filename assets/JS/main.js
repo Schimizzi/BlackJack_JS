@@ -7,7 +7,10 @@
 
 
 let deck = [];
-
+// referencias al html
+const btnPedir = document.querySelectorAll('button')[1]; //segundo boton
+let puntosJugador = 0, puntosAI = 0;
+const smallPuntosJugador = document.querySelectorAll('small');
 
 const crearDeck = (x) => {
 
@@ -30,6 +33,54 @@ for(let tipo of tipos){
         deck.push(esp+tipo)
     }
 }
-console.log(deck)
-deck = _.shuffle(deck);
-console.log(deck)
+
+deckCartas = _.shuffle(deck);
+//return deck a algun lado
+
+
+const pedirCarta = () => {   
+    const tomarCarta = deckCartas.pop();
+    return tomarCarta;
+}
+
+
+const valorCarta = (carta) => {
+    const valorASumar = carta.substring(0, carta.length - 1);
+    let puntos = 0;
+    if(isNaN(valorASumar)){
+        if(valorASumar == "K" || valorASumar == "Q" || valorASumar == "J" ){
+            puntos = 10;
+        }else if(valorASumar == "A"){
+            puntos = 11;
+        }
+        console.log(puntos);
+        console.log(typeof(puntos));
+
+    }else{
+        puntos = parseInt(valorASumar);
+        console.log(puntos);
+        console.log(typeof(puntos));
+        
+    }
+    return puntos;
+   
+}
+
+let carta = pedirCarta();
+let valorC = valorCarta(carta);
+console.log(valorC)
+
+//--Eventos-----------
+
+btnPedir.addEventListener('click', function() {
+
+
+    const carta = pedirCarta();
+    //console.log(carta);
+    puntosJugador = puntosJugador + valorCarta(carta);
+    smallPuntosJugador[0].innerText = puntosJugador;
+
+});
+
+
+
